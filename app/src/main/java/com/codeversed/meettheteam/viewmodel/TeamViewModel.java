@@ -9,6 +9,7 @@ import com.codeversed.meettheteam.vo.Teammate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,8 +23,18 @@ public class TeamViewModel extends ViewModel {
   public void setData(String jsonString) {
 
     if (!TextUtils.isEmpty(jsonString)) {
+
       // Use TypeToken to load as a list with 'Teammate' object
-      data.setValue(new Gson().fromJson(jsonString, new TypeToken<List<Teammate>>() {}.getType()));
+      List<Teammate> listData = new Gson().fromJson(jsonString, new TypeToken<List<Teammate>>() {}.getType());
+
+      // Sort the data for better readability
+      Collections.sort(listData, (obj1, obj2) -> {
+        // Ascending order
+        return obj1.getFullName().compareToIgnoreCase(obj2.getFullName());
+      });
+
+      data.setValue(listData);
+
     }
 
   }
