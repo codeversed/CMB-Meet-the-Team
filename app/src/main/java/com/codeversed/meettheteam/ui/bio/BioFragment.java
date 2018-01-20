@@ -1,8 +1,11 @@
 package com.codeversed.meettheteam.ui.bio;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,8 @@ public class BioFragment extends Fragment implements OnKenBurnsEventListener {
 
   protected BioActivity activity;
 
+  @BindView(R.id.nested_scroll) NestedScrollView nestedScrollView;
+  @BindView(R.id.card_view) CardView cardView;
   @BindView(R.id.bio) TextView bio;
 
   public BioFragment() {}
@@ -63,6 +68,20 @@ public class BioFragment extends Fragment implements OnKenBurnsEventListener {
           animateKenBurns(activity.avatar, this, -99999, -99999, -99999);
         }
       }
+
+      activity.appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+
+        float range = appBarLayout.getTotalScrollRange();
+        float calc = Math.abs(verticalOffset / range);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          appBarLayout.setElevation(0);
+        }
+
+        nestedScrollView.setTranslationY(1f + calc * 200);
+
+      });
+
     }
 
   }

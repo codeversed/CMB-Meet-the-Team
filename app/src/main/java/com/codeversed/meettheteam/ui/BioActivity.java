@@ -32,9 +32,9 @@ public class BioActivity extends AppCompatActivity {
 
   @BindView(R.id.collapsing_toolbar) public CollapsingToolbarLayout collapsingToolbar;
   @BindView(R.id.title) public TextView title;
+  @BindView(R.id.app_bar) public AppBarLayout appBar;
   @BindView(R.id.toolbar_hero_image) public ImageView avatar;
   @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.app_bar) AppBarLayout appBar;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
