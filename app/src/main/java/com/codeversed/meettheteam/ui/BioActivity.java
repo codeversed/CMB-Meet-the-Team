@@ -1,6 +1,8 @@
 package com.codeversed.meettheteam.ui;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.support.design.widget.CollapsingToolbarLayout.LayoutParams;
+import static com.codeversed.meettheteam.utils.UiHelper.fixAppBarOnDrag;
 import static com.codeversed.meettheteam.utils.UiHelper.getStatusBarHeight;
 
 /**
@@ -27,6 +30,7 @@ public class BioActivity extends AppCompatActivity {
 
   @BindView(R.id.collapsing_toolbar) public CollapsingToolbarLayout collapsingToolbar;
   @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.app_bar) AppBarLayout appBar;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -55,6 +59,16 @@ public class BioActivity extends AppCompatActivity {
       getSupportFragmentManager().executePendingTransactions();
     }
 
+  }
+
+  @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+    super.onPostCreate(savedInstanceState);
+    appBar.post(new Runnable() {
+      @Override public void run() {
+        // Removes onDrag (scrolling) when touching the appBar itself
+        fixAppBarOnDrag(appBar);
+      }
+    });
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
