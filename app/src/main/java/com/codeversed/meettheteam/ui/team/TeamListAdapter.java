@@ -18,7 +18,6 @@ import com.codeversed.meettheteam.vo.Teammate;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,17 +36,21 @@ public class TeamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
   private List<Teammate> teamData = new ArrayList<>();
 
-  public TeamListAdapter(Context context, List<Teammate> teamData, ClickCallback callback) {
+  public TeamListAdapter(Context context, ClickCallback callback) {
     inflater = LayoutInflater.from(context);
-    this.teamData = teamData;
     this.callback = callback;
-    Collections.sort(this.teamData, new Comparator<Teammate>() {
-      @Override public int compare(Teammate item, Teammate t1) {
-        String s1 = item.getFullName();
-        String s2 = t1.getFullName();
-        return s1.compareToIgnoreCase(s2);
-      }
+    Collections.sort(this.teamData, (item, t1) -> {
+      String s1 = item.getFullName();
+      String s2 = t1.getFullName();
+      return s1.compareToIgnoreCase(s2);
     });
+  }
+
+  public void setData(List<Teammate> teamData) {
+    if (teamData.size() == 0) return;
+    this.teamData.clear();
+    this.teamData.addAll(teamData);
+    notifyDataSetChanged();
   }
 
   private Object getItem(int position) {
