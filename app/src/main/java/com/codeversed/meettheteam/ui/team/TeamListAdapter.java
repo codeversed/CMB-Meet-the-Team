@@ -23,6 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
 /**
  * Created by steve on 1/19/18.
  * steve.albright@gmail.com
@@ -33,17 +35,24 @@ public class TeamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
   private final LayoutInflater inflater;
   private final ClickCallback callback;
+  private boolean isCards = true;
 
   private List<Teammate> teamData = new ArrayList<>();
 
-  public TeamListAdapter(Context context, ClickCallback callback) {
+  public TeamListAdapter(Context context, boolean isCards, ClickCallback callback) {
     inflater = LayoutInflater.from(context);
+    this.isCards = isCards;
     this.callback = callback;
     Collections.sort(this.teamData, (item, t1) -> {
       String s1 = item.getFullName();
       String s2 = t1.getFullName();
       return s1.compareToIgnoreCase(s2);
     });
+  }
+
+  public void setIsCards(boolean isCards) {
+    this.isCards = isCards;
+    notifyDataSetChanged();
   }
 
   public void setData(List<Teammate> teamData) {
@@ -61,7 +70,11 @@ public class TeamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     switch (viewType) {
       case TYPE_ITEM:
-        return new ItemViewHolder(inflater.inflate(R.layout.item_teammate, parent, false));
+        if (isCards) {
+          return new ItemViewHolder(inflater.inflate(R.layout.item_teammate_cards, parent, false));
+        } else {
+          return new ItemViewHolder(inflater.inflate(R.layout.item_teammate, parent, false));
+        }
     }
 
     return null;
@@ -93,20 +106,29 @@ public class TeamListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       vh.bio.setText(tm.getBio());
 
       if (!TextUtils.isEmpty(tm.getAvatar())) {
+        RequestOptions ro;
+        if (isCards) {
+          ro = RequestOptions
+              .centerCropTransform()
+              .diskCacheStrategy(DiskCacheStrategy.ALL);
+        } else {
+          ro = RequestOptions
+              .circleCropTransform()
+              .diskCacheStrategy(DiskCacheStrategy.ALL);
+        }
         Glide.with(vh.avatar.getContext())
             .load(tm.getAvatar())
-            .apply(RequestOptions
-                       .circleCropTransform()
-                       .diskCacheStrategy(DiskCacheStrategy.ALL))
+            .transition(withCrossFade())
+            .apply(ro)
             .into(vh.avatar);
+      } else {
+        vh.avatar.setImageResource(R.drawable.header_pattern_repeat_blue);
       }
 
       vh.constraintLayout.setTag(tm);
-      vh.constraintLayout.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-          if (callback != null) {
-            callback.onClick((Teammate) view.getTag());
-          }
+      vh.constraintLayout.setOnClickListener(view -> {
+        if (callback != null) {
+          callback.onClick((Teammate) view.getTag());
         }
       });
     }
