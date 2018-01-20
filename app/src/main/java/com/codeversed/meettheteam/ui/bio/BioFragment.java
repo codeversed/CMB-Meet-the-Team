@@ -19,12 +19,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.codeversed.meettheteam.ui.BioActivity.ARG_TM;
+import static com.codeversed.meettheteam.utils.AnimationHelper.OnKenBurnsEventListener;
+import static com.codeversed.meettheteam.utils.AnimationHelper.animateKenBurns;
 
 /**
  * Created by steve on 1/19/18.
  * steve.albright@gmail.com
  */
-public class BioFragment extends Fragment {
+public class BioFragment extends Fragment implements OnKenBurnsEventListener {
 
   protected BioActivity activity;
 
@@ -58,10 +60,14 @@ public class BioFragment extends Fragment {
                          .centerCropTransform()
                          .diskCacheStrategy(DiskCacheStrategy.ALL))
               .into(activity.avatar);
+          animateKenBurns(activity.avatar, this, -99999, -99999, -99999);
         }
       }
     }
 
   }
 
+  @Override public void onKenBurnsEnd(float toTransX, float toTransY, float toScale) {
+    animateKenBurns(activity.avatar, this, toTransX, toTransY, toScale);
+  }
 }
