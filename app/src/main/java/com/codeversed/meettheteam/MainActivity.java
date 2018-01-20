@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     setSupportActionBar(toolbar);
+    toolbar.setNavigationIcon(R.drawable.ic_import_contacts_24dp);
 
     // Dynamically offset toolbar for translucent status
     LayoutParams lp = (LayoutParams) toolbar.getLayoutParams();

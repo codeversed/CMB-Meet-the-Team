@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.codeversed.meettheteam.R;
 import com.codeversed.meettheteam.ui.BioActivity;
 import com.codeversed.meettheteam.vo.Teammate;
@@ -48,6 +51,13 @@ public class BioFragment extends Fragment {
           // Setup toolbar and teammate specific fields
           activity.collapsingToolbar.setTitle(tm.getFullName());
           bio.setText(tm.getBio());
+          activity.title.setText(tm.getTitle());
+          Glide.with(activity.avatar.getContext())
+              .load(tm.getAvatar())
+              .apply(RequestOptions
+                         .centerCropTransform()
+                         .diskCacheStrategy(DiskCacheStrategy.ALL))
+              .into(activity.avatar);
         }
       }
     }

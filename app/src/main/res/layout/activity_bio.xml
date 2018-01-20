@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             app:collapsedTitleGravity="start"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleGravity="center_horizontal"
-            app:expandedTitleMarginTop="80dp"
+            app:expandedTitleMarginTop="90dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -29,17 +28,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/workspace"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                android:alpha=".75"
                 app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.5" />
+                app:layout_collapseParallaxMultiplier="0.5"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_gravity="center"
+                android:layout_marginTop="70dp"
+                android:textColor="@android:color/white"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier=".5"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                tools:text="Professional Title" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -50,5 +62,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!--<ImageView-->
+        <!--android:id="@+id/avatar"-->
+        <!--android:layout_width="@dimen/avatar_size_large"-->
+        <!--android:layout_height="@dimen/avatar_size_large"-->
+        <!--android:scaleType="fitXY"-->
+        <!--app:elevation="8dp"-->
+        <!--app:layout_anchor="@id/container"-->
+        <!--app:layout_anchorGravity="top|center_horizontal"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--app:layout_collapseMode="parallax"-->
+        <!--app:layout_collapseParallaxMultiplier=".5"-->
+        <!--app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />-->
 
 </android.support.design.widget.CoordinatorLayout>

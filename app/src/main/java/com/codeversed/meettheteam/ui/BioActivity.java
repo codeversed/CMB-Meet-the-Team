@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.codeversed.meettheteam.R;
 import com.codeversed.meettheteam.ui.bio.BioFragment;
@@ -29,6 +31,8 @@ public class BioActivity extends AppCompatActivity {
   public static final String TAG_BIO = "TAG_BIO";
 
   @BindView(R.id.collapsing_toolbar) public CollapsingToolbarLayout collapsingToolbar;
+  @BindView(R.id.title) public TextView title;
+  @BindView(R.id.toolbar_hero_image) public ImageView avatar;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.app_bar) AppBarLayout appBar;
 
@@ -63,11 +67,9 @@ public class BioActivity extends AppCompatActivity {
 
   @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    appBar.post(new Runnable() {
-      @Override public void run() {
-        // Removes onDrag (scrolling) when touching the appBar itself
-        fixAppBarOnDrag(appBar);
-      }
+    appBar.post(() -> {
+      // Removes onDrag (scrolling) when touching the appBar itself
+      fixAppBarOnDrag(appBar);
     });
   }
 

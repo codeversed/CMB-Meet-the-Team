@@ -10,7 +10,7 @@
     <dimen name="avatar_size_xlarge">70dp</dimen>
 
     <dimen name="no_space">0dp</dimen>
-    <dimen name="normal_space">4dp</dimen>
+    <dimen name="normal_space">8dp</dimen>
     <dimen name="lbl_top_offset">2dp</dimen>
 
 </resources>
